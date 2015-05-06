@@ -32,16 +32,41 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(productsICanEat.length).toBe(FILL_ME_IN);
+    expect(productsICanEat.length).toBe(1);
   });
 
   it("given I'm allergic to nuts and hate mushrooms, it should find a pizza I can eat (functional)", function () {
 
-      var productsICanEat = [];
+      var productsICanEat = [];    
 
       /* solve using filter() & all() / any() */
+      
+      // Create function that will loop through our products object and return all valid food items
+      var getValidProducts = function(menu) {
+          var nonNutty = [];
+          
+          // First, let's look through our "menu" object and remove anything that contains nuts using _.filter
+          nonNutty = _.filter(menu, function(foodOptions) {
+              return foodOptions.containsNuts === false;
+          });
+          
+          // After we built a new array of valid menu items above, let's basically do the same thing to
+          // filter our anything that contains mushrooms.
+          var nonShroomy = [];
+          nonShroomy = _.filter(nonNutty, function(foodOptions) {
+              if (foodOptions.ingredients.indexOf('mushrooms') == -1) {
+                  return foodOptions.name;
+              };
+          })
+          
+          // This should return the complete list of foods that we are able to eat (e.g., nothing with nuts or mushrooms)
+          return nonShroomy;
+      };
 
-      expect(productsICanEat.length).toBe(FILL_ME_IN);
+      var productsICanEat = [];
+      productsICanEat = getValidProducts(products);
+
+      expect(productsICanEat.length).toBe(1);
   });
 
   /*********************************************************************************/
