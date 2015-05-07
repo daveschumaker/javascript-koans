@@ -89,7 +89,7 @@ describe("About Applying What We Have Learnt", function() {
     var sum = _.chain(_.range(1000))
                .filter(function(num) {return num % 3 === 0 || num %5 === 0})
                .reduce(function(total, num) {return total + num}, 0)
-               .value();;    
+               .value();    
 
     expect(233168).toBe(sum);
   });
