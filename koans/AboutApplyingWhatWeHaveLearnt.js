@@ -104,19 +104,33 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   it("should count the ingredient occurrence (functional)", function () {
     var ingredientCount = { "{ingredient name}": 0 };
 
     /* chain() together map(), flatten() and reduce() */
-    var ingredientCount = _.chain(products)
-                        .map(function(obj) { return obj.ingredients})
-                        .flatten(function(obj) {return obj})
-                        .value();
+    
+    // Quick function to determine whether or not a property exists in our object.
+    // This helps prevent some pesky undefined errors that I was getting.
+    var checkExists = function(ingredient) {
+        if (typeof ingredientCount[ingredient] === 'undefined') {
+            ingredientCount[ingredient] = 1;
+        } else {
+            ingredientCount[ingredient]++;
+        }
+        return ingredientCount;
+    }
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    // Chaining a number of functions to create a list of ingredients found in our product menu.
+    _.chain(products)
+     .map(function(obj) { return obj.ingredients})
+     .flatten()
+     .reduce(function(total, ingredient) { return checkExists(ingredient);})
+     .value();  
+
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
