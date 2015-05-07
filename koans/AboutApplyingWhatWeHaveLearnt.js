@@ -112,8 +112,9 @@ describe("About Applying What We Have Learnt", function() {
 
     /* chain() together map(), flatten() and reduce() */
     var ingredientCount = _.chain(products)
-                          .map(function(obj) { return obj.ingredients})
-                          .value();
+                        .map(function(obj) { return obj.ingredients})
+                        .flatten(function(obj) {return obj})
+                        .value();
 
     expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
   });
